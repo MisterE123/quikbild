@@ -16,11 +16,13 @@ for i = 1, #dyes do
             if arena_lib.is_player_in_arena(placer:get_player_name(), "quikbild") then
                 --minetest.chat_send_all('ln17')
                 local pos = pointed_thing.above
-                if minetest.get_node(pos).name == 'air' or string.find(minetest.get_node(pos).name,'quikbild') then  
-                    --minetest.chat_send_all('ln20')
-                    minetest.set_node(pos, {name="quikbild:" .. name})
+                if pos then
+                    if minetest.get_node(pos).name == 'air' or string.find(minetest.get_node(pos).name,'quikbild') then  
+                        --minetest.chat_send_all('ln20')
+                        minetest.set_node(pos, {name="quikbild:" .. name})
 
-                    return ItemStack("quikbild:" .. name), pos
+                        return ItemStack("quikbild:" .. name), pos
+                    end
                 end
             end
             
@@ -32,9 +34,11 @@ for i = 1, #dyes do
         on_use = function(itemstack, user, pointed_thing)
             if arena_lib.is_player_in_arena(user:get_player_name(), "quikbild") then
                 local pos = pointed_thing.under 
-                if string.find(minetest.get_node(pos).name,'quikbild') then  
+                if pos then
+                    if string.find(minetest.get_node(pos).name,'quikbild') then  
 
-                    minetest.set_node(pos, {name="air"})
+                        minetest.set_node(pos, {name="air"})
+                    end
                 end
             end
             return nil
